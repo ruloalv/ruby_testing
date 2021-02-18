@@ -70,22 +70,18 @@ describe 'equality assignment' do
   # Write a test that expresses each of the following statements.
 
   # remove the 'x' before running this test
-  it 'amy is eq to bob' do
-    expect(amy).to eq(bob)
+  xit 'amy is eq to bob' do
   end
 
   # remove the 'x' before running this test
-  it 'amy is eql to bob' do
-    expect(amy).to eql(bob)
+  xit 'amy is eql to bob' do
   end
 
   # remove the 'x' before running this test
-  it 'amy is not equal to bob' do
-    expect(amy).not_to equal(bob)
+  xit 'amy is not equal to bob' do
   end
 
   # remove the 'x' before running this test
-  it 'copy_cat is equal to amy' do
-    expect(copy_cat).to be(amy)
+  xit 'copy_cat is equal to amy' do
   end
 end

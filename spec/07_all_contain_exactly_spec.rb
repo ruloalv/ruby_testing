@@ -79,12 +79,10 @@ describe Array do
   # Write a test that expresses each of the following statements.
 
   # remove the 'x' before running this test
-  it 'includes 21 and ends with 89' do
-    expect(fibonacci_sequence).to include(21).and end_with(89)
+  xit 'includes 21 and ends with 89' do
   end
 
   # remove the 'x' before running this test
-  it 'starts with 0, 1, 1, 2 and all are under 100' do
-    expect(fibonacci_sequence).to start_with(0, 1, 1, 2).and all(be < 100)
+  xit 'starts with 0, 1, 1, 2 and all are under 100' do
   end
 end

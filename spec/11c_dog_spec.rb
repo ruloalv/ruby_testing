@@ -35,17 +35,20 @@ end
 
 describe Dog do
   # Create a subject with your choice of dog name and optional breed/color.
-
+  subject(:dogy) {described_class.new('manchita', 'none', 'blanco')}
   # Write a test using the second shared_example to test that dog responds to
   # talk ('WOOF!').
-  context '' do
+  context 'shared talk' do
+  	include_examples 'shared method name'
   end
 
   # remove the 'x' before running this test
-  xit 'is not barking' do
+  it 'is not barking' do
+  	expect(dogy.barking?).to be(false)
   end
 
   # remove the 'x' before running this test
-  xit 'is sleeping' do
+  it 'is sleeping' do
+  	expect(dogy.sleeping?).to be(true)
   end
 end

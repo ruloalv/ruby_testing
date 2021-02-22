@@ -130,17 +130,34 @@ describe BinaryGame do
 
     context 'when user inputs an incorrect value once, then a valid input' do
       before do
+      	letter = 'b'
+      	valid_input = '10'
+      	allow(game_input).to receive(:gets).and_return(letter, valid_input)
       end
 
-      xit 'completes loop and displays error message once' do
+      it 'completes loop and displays error message once' do
+      	min = game_input.instance_variable_get(:@minimum)
+      	max = game_input.instance_variable_get(:@maximum)
+      	error_message = "Input error! Please enter a number between #{min} or #{max}."
+      	expect(game_input).to receive(:puts).with(error_message).once
+      	game_input.player_input(min, max)
       end
     end
 
     context 'when user inputs two incorrect values, then a valid input' do
       before do
+      	simbol = '@'
+      	out_of_range = '11'
+      	valid_input = '10'
+      	allow(game_input).to receive(:gets).and_return(simbol, out_of_range, valid_input)
       end
 
-      xit 'completes loop and displays error message twice' do
+      it 'completes loop and displays error message twice' do
+      	min = game_input.instance_variable_get(:@minimum)
+      	max = game_input.instance_variable_get(:@maximum)
+      	error_message = "Input error! Please enter a number between #{min} or #{max}."
+      	expect(game_input).to receive(:puts).with(error_message).twice
+      	game_input.player_input(min, max)
       end
     end
   end
@@ -155,13 +172,17 @@ describe BinaryGame do
 
     # Note: #verify_input will only return a number if it is between?(min, max)
 
+    subject(:game_verify) {described_class.new(5, 15)}
+
     context 'when given a valid input as argument' do
-      xit 'returns valid input' do
+      it 'returns valid input' do
+      	expect(game_verify.verify_input(1, 2, 1)).to be(1)
       end
     end
 
     context 'when given invalid input as argument' do
-      xit 'returns nil' do
+      it 'returns nil' do
+      	expect(game_verify.verify_input(1, 5, 6)).to be_nil
       end
     end
   end
@@ -251,7 +272,9 @@ describe BinaryGame do
 
     # Write a test for the following context.
     context 'when game minimum and maximum is 100 and 600' do
-      xit 'returns 9' do
+    	subject(:game_fivehundred) {described_class.new(100, 600)}
+      it 'returns 9' do
+      	expect(game_fivehundred.maximum_guesses).to eq(9)
       end
     end
   end

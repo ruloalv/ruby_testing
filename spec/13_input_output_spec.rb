@@ -175,8 +175,8 @@ describe NumberGame do
     context 'when user inputs two incorrect values, then a valid input' do
       before do
       	letter = 'x'
-      	off_scope_num = 11
-      	valid_input = 5
+      	off_scope_num = '11'
+      	valid_input = '5'
       	allow(game_loop).to receive(:player_input).and_return(letter, off_scope_num, valid_input)
       end
 

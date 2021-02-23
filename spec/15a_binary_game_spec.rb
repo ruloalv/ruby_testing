@@ -332,7 +332,12 @@ describe BinaryGame do
 
     # Write a test for the following context.
     context 'when game_over? is false five times' do
-      xit 'calls display_turn_order five times' do
+    	before do
+    		allow(search_display).to receive(:game_over?).and_return(false, false, false, false, false, true)
+    	end
+      it 'calls display_turn_order five times' do
+      	expect(game_display).to receive(:display_turn_order).with(search_display).exactly(5).times
+      	game_display.display_binary_search(search_display)
       end
     end
   end
@@ -345,21 +350,32 @@ describe BinaryGame do
     # #display_turn_order will loop until binary_search.game_over?
 
     # Create a new subject and an instance_double for BinarySearch.
+    subject(:game_turn) {described_class.new(1,10)}
+    let(:binary_search_turn) {instance_double(BinarySearch)}
 
     before do
       # You'll need to create a few method stubs.
+      allow(binary_search_turn).to receive(:make_guess)
+      allow(binary_search_turn).to receive(:update_range)
+      allow(game_turn).to receive(:display_guess)
+      allow(binary_search_turn).to receive(:game_over?)
     end
 
     # Command Method -> Test the change in the observable state
-    xit 'increases guess_count by one' do
+    it 'increases guess_count by one' do
+    	expect{game_turn.display_turn_order(binary_search_turn)}.to change{game_turn.instance_variable_get(:@guess_count)}.by(1)
     end
 
     # Method with Outgoing Command -> Test that a message is sent
-    xit 'sends make_guess' do
+    it 'sends make_guess' do
+    	expect(binary_search_turn).to receive(:make_guess).once
+    	game_turn.display_turn_order(binary_search_turn)
     end
 
     # Method with Outgoing Command -> Test that a message is sent
-    xit 'sends update_range' do
+    it 'sends update_range' do
+    	expect(binary_search_turn).to receive(:update_range).once
+    	game_turn.display_turn_order(binary_search_turn)
     end
 
     # Using method expectations can be confusing. Stubbing the methods above
@@ -370,7 +386,7 @@ describe BinaryGame do
     # #display_turn_order. Uncomment the line at the bottom of this
     # paragraph, move it to the before hook, and run the tests.
     # All of the tests should continue to pass.
-    # allow(binary_search_turn).to receive(:game_over?)
+    
 
     # Now, in the lib/15a_binary_game.rb file, comment out either line,
     # binary_search.make_guess or binary_search.update_range. Resave the file

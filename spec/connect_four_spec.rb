@@ -46,4 +46,53 @@ describe Board do
 			end
 		end
 	end
+
+	describe '#four_in_col?' do
+		subject(:board_four_col) {described_class.new(grid)}
+
+		context '#when there are four of the same simbols together on the same col' do
+			let(:grid) {[['X', 'X', 'X', 'X',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' ']]}
+			it 'return true' do
+				expect(board_four_col.four_in_col?(grid)).to be(true)
+			end
+
+			let(:grid) {[['X', 'X', ' ', ' ',' ',' ',' '],[' ',' ','O','O','O','O',' '],[' ',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' ']]}
+			it 'return true' do
+				expect(board_four_col.four_in_col?(grid)).to be(true)
+			end
+		end
+	end
+
+	describe '#four_in_row?' do
+		subject(:board_four_row) {described_class.new(grid)}
+		
+		context '#when there are four of the same simbols together on the same row' do
+			let(:grid) {[[' ', ' ', ' ', ' ',' ',' ',' '],['X',' ',' ',' ',' ',' ',' '],['X',' ',' ',' ',' ',' ',' '],['X',' ',' ',' ',' ',' ',' '],['X',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' ']]}
+			it 'return true' do
+				expect(board_four_row.four_in_row?(grid)).to be(true)
+			end
+
+			let(:grid) {[['X', 'X', ' ', ' ',' ',' ',' '],[' ',' ','O',' ',' ',' ',' '],[' ',' ','O',' ',' ',' ',' '],[' ',' ','O',' ',' ',' ',' '],[' ',' ','O',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' ']]}
+			it 'return true' do
+				expect(board_four_row.four_in_row?(grid)).to be(true)
+			end
+		end
+	end
+
+	describe '#four_in_diag?' do
+		subject(:board_four_diag) {described_class.new(grid)}
+		context '#when there are four of the same simbols together on the same diag' do
+			let(:grid) {[['X', 'O', 'X', 'X',' ',' ',' '],[' ',' ','O',' ',' ',' ',' '],[' ',' ',' ','O',' ',' ',' '],[' ',' ',' ',' ','O',' ',' '],[' ',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' ']]}
+			it 'return true' do
+				allow(board_four_diag.four_in_diag?(grid)).to receive(:four_left_diag?).and_return(false)
+				expect(board_four_col.four_in_diag?(grid)).to be(true)
+			end
+
+			let(:grid) {[['X', 'X', ' ', 'X',' ',' ',' '],[' ',' ','O','O','X','O',' '],[' ',' ',' ',' ',' ','X',' '],[' ',' ',' ',' ',' ',' ','X'],[' ',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' ']]}
+			it 'return true' do
+				allow(board_four_diag.four_in_diag?).to receive(:four_left_diag?).and_return(false)
+				expect(board_four_col.four_in_diag?(grid)).to be(true)
+			end
+		end
+	end
 end

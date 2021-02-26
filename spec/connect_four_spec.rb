@@ -50,7 +50,7 @@ describe Board do
 	describe '#four_in_col?' do
 		subject(:board_four_col) {described_class.new(grid)}
 
-		context '#when there are four of the same simbols together on the same col' do
+		context 'when there are four of the same simbols together on the same col' do
 			let(:grid) {[['X', 'X', 'X', 'X',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' ']]}
 			it 'return true' do
 				expect(board_four_col.four_in_col?(grid)).to be(true)
@@ -66,7 +66,7 @@ describe Board do
 	describe '#four_in_row?' do
 		subject(:board_four_row) {described_class.new(grid)}
 		
-		context '#when there are four of the same simbols together on the same row' do
+		context 'when there are four of the same simbols together on the same row' do
 			let(:grid) {[[' ', ' ', ' ', ' ',' ',' ',' '],['X',' ',' ',' ',' ',' ',' '],['X',' ',' ',' ',' ',' ',' '],['X',' ',' ',' ',' ',' ',' '],['X',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' ']]}
 			it 'return true' do
 				expect(board_four_row.four_in_row?(grid)).to be(true)
@@ -83,16 +83,44 @@ describe Board do
 		subject(:board_four_diag) {described_class.new(grid)}
 		context '#when there are four of the same simbols together on the same diag' do
 			let(:grid) {[['X', 'O', 'X', 'X',' ',' ',' '],[' ',' ','O',' ',' ',' ',' '],[' ',' ',' ','O',' ',' ',' '],[' ',' ',' ',' ','O',' ',' '],[' ',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' ']]}
-			it 'return true' do
-				allow(board_four_diag.four_in_diag?(grid)).to receive(:four_left_diag?).and_return(false)
-				expect(board_four_col.four_in_diag?(grid)).to be(true)
+			it 'when tokens are in left diag return true' do
+				expect(board_four_diag.four_in_diag?(grid)).to be(true)
 			end
 
 			let(:grid) {[['X', 'X', ' ', 'X',' ',' ',' '],[' ',' ','O','O','X','O',' '],[' ',' ',' ',' ',' ','X',' '],[' ',' ',' ',' ',' ',' ','X'],[' ',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' ']]}
-			it 'return true' do
-				allow(board_four_diag.four_in_diag?).to receive(:four_left_diag?).and_return(false)
-				expect(board_four_col.four_in_diag?(grid)).to be(true)
+			it 'when tokens are in left diag return true' do
+				expect(board_four_diag.four_in_diag?(grid)).to be(true)
+			end
+
+			let(:grid) {[['X', 'O', 'X', 'X',' ',' ','X'],[' ',' ','X',' ',' ','X',' '],[' ',' ',' ','O','X',' ',' '],[' ',' ',' ','X','O',' ',' '],[' ',' ','X',' ',' ',' ',' '],[' ','X',' ',' ',' ',' ',' ']]}
+			it 'when tokens are in right diag return true' do
+				expect(board_four_diag.four_in_diag?(grid)).to be(true)
+			end
+
+			let(:grid) {[['X', 'X', ' ', 'X',' ',' ',' '],[' ',' ','O','O','X','O',' '],[' ',' ',' ',' ','O',' ',' '],[' ',' ',' ','O',' ',' ',' '],[' ','O','O',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' ']]}
+			it 'when tokens are in right diag return true' do
+				expect(board_four_diag.four_in_diag?(grid)).to be(true)
 			end
 		end
+		context 'when there arent any four token connected' do
+			let(:grid) {[['X', 'X', ' ', 'X',' ',' ',' '],[' ',' ','O','O','X','O',' '],[' ',' ',' ',' ','O',' ',' '],[' ',' ',' ','O',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' ']]}
+			it 'expect to return false' do
+				expect(board_four_diag.four_in_diag?(grid)).to be(false)
+			end
+		end
+	end
+
+	describe '#check_win' do
+		subject(:board_check_win) {described_class.new(:grid)}
+		context 'when given a board check if there are any winner' do
+			let(:grid) {[['X', 'X', ' ', 'X',' ',' ',' '],[' ',' ','O','O','X','O',' '],[' ',' ',' ',' ','O',' ',' '],[' ',' ',' ','O',' ',' ',' '],[' ','O','O',' ',' ',' ',' '],[' ',' ',' ',' ',' ',' ',' ']]}
+			it 'return true' do
+				expect(board_check_win.check_win(grid)).to be(true)
+			end
+		end
+	end
+
+	describe '#play' do
+		context
 	end
 end
